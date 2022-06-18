@@ -1,0 +1,57 @@
+{
+  "name": "dexit/core-wordpress-deployment-plugins",
+  "description": "In Principal a basic repo holding installation instructions.",
+  "license": "MIT",
+  "require": {
+    "php": "~7.4",
+    "johnpbloch/wordpress": "^5.9"
+  },
+  "require-dev": {
+    "afragen/git-updater": "^11.0",
+    "wpackagist-plugin/query-monitor": "^3.9"
+  },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "https://wpackagist.org",
+      "only": [
+        "wpackagist-plugin/*",
+        "wpackagist-theme/*"
+      ]
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/afragen/git-updater.git"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "config": {
+    "allow-plugins": {
+      "composer/installers": true,
+      "johnpbloch/wordpress-core-installer": true
+    },
+    "classmap-authoritative": true,
+    "preferred-install": {
+      "*": "dist"
+    }
+  },
+  "extra": {
+    "installer-paths": {
+      "public/wp-content/plugins/{$name}/": [
+        "type:wordpress-plugin"
+      ],
+      "public/wp-content/themes/{$name}/": [
+        "type:wordpress-theme"
+      ]
+    },
+    "wordpress-install-dir": "public/project"
+  },
+  "scripts": {
+    "post-autoload-dump": [
+      "wget --no-verbose -N -P public/wp-content/plugins/ https://bitbucket.org/afragen/test-plugin-notags/raw/master/test-plugin-notags.php",
+      "wget --no-verbose -N -P public/wp-content/plugins/ https://gitlab.com/afragen/test-gitlab-plugin2/-/raw/master/test-gitlab-plugin2.php?inline=false",
+      "wget --no-verbose -N -P public/wp-content/plugins/ https://direct-download.com/path/to.zip || true"
+    ]
+  }
+}
